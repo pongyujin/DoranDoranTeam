@@ -1,4 +1,4 @@
-package com.doran.Hcontroller;
+package com.doran.hardware;
 
 import java.util.Properties;
 
