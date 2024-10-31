@@ -1,0 +1,507 @@
+@charset "UTF-8";
+
+/* 기본 스타일 설정 */
+* {
+    font-family: Arial, sans-serif;
+}
+
+/* 모달 창 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: rgb(49, 63, 73);
+    padding: 0;
+    border-radius: 10px;
+    color: white;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
+/* 모달 헤더 스타일 */
+.modal-header {
+    cursor: move;
+    padding: 10px;
+    background-color: #3e4951; /* 헤더 배경색 변경 */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 제목을 중앙에 배치 */
+    position: relative; /* 닫기 버튼을 절대 위치로 배치하기 위해 설정 */
+}
+
+/* 드래그 중인 상태의 모달 헤더 스타일 */
+.modal-header.dragging {
+    background-color: #7c858c; /* 드래그 중일 때의 배경색 */
+    cursor: grabbing;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: white;
+}
+
+.modal-header .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+/* 모달 컨텐츠 스타일 */
+.modal-content {
+    padding: 20px;
+}
+
+/* 리사이즈 핸들 스타일 */
+.resize-handle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: transparent;
+    cursor: se-resize;
+    right: 0;
+    bottom: 0;
+}
+
+/* 제목 스타일 */
+h2 {
+    text-align: center;
+}
+
+/* 중복체크 버튼 스타일 */
+.duplicate-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    background-color: #1C2933;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80px;
+}
+/* 성공 상태 스타일 */
+.input-success {
+    border-bottom-color: green !important;
+}
+
+/* 오류 상태 스타일 */
+.input-error {
+    border-bottom-color: red !important;
+}
+
+input[type="text"]:focus:not(.input-success):not(.input-error),
+input[type="password"]:focus:not(.input-success):not(.input-error),
+input[type="email"]:focus:not(.input-success):not(.input-error),
+input[type="file"]:focus:not(.input-success):not(.input-error) {
+    outline: none;
+    border-bottom-color: white;
+}
+
+
+.duplicate-btn:hover {
+    background-color: #17293A;
+}
+/* 텍스트 입력 필드 스타일 */
+input[type="text"], input[type="password"], input[type="email"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="file"]:focus {
+    outline: none;
+    border-bottom-color: white;
+}
+
+/* 파일 업로드 버튼 스타일 */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #1C2933;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #17293A;
+}
+
+.custom-file-upload:active {
+    background-color: #0f1c28;
+}
+
+/* 닫기 버튼 스타일 */
+.close {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* 가입 및 등록 버튼 스타일 */
+.join-button, .register-button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px;
+    width: 150px;
+    background-color: #1C2933;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.join-button:hover, .register-button:hover {
+    background-color: #17293A;
+}
+
+/* 소셜 로그인 버튼 스타일 */
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.social-btn img {
+    width: 40px;
+    height: 40px;
+}
+
+.social-btn.naver img {
+    width: 62px;
+    height: 60px;
+    margin-top: -12px;
+}
+
+/* 그룹 정보 모달의 초대 섹션 스타일 */
+.invite-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.invite-section input {
+    width: 70%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+}
+
+.invite-section button {
+    width: 25%;
+    padding: 10px;
+    background-color: #5A77F9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.invite-section button:hover {
+    background-color: #4763C8;
+}
+
+/* 그룹 정보 모달의 사용자 리스트 스타일 */
+.user-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #1F2D3A;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+}
+
+.user-list li span {
+    font-size: 14px;
+    color: white;
+}
+
+.user-list li select {
+    width: 50%;
+    padding: 8px;
+    background-color: #2C3E50;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.user-list li select:hover {
+    background-color: #34495E;
+}
+
+/* 기본 설정 */
+.ship-info-row, .sail-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: rgba(173, 216, 230, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* 세부 정보 스타일 */
+.ship-details, .sail-details {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+/* 버튼 컨테이너 */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.button-container button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #4763C8FF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 120px;
+}
+
+.button-container button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 선박리스트 */
+#shipList {
+    padding: 0px !important;
+}
+
+/* 페이징 버튼 스타일 */
+.pagination-container {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.page-button {
+    padding: 5px 10px;
+    background-color: #4763C8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.page-button.active {
+    background-color: #17293A;
+}
+
+.page-button:hover {
+    background-color: #34495E;
+}
+
+/* 제목과 벨 아이콘을 감싸는 컨테이너 */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* 알림 아이콘 박스 스타일 */
+.notification-box {
+    position: fixed;
+    z-index: 99;
+    top: 40px;
+    left: 42px;
+    width: 35px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.notification-bell {
+  animation: bell 1s 1s both infinite;
+}
+
+.notification-bell * {
+  display: block;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 15px #fff;
+}
+
+.bell-top {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px 3px 0 0;
+}
+
+.bell-middle {
+  width: 25px;
+  height: 25px;
+  margin-top: -1px;
+  border-radius: 12.5px 12.5px 0 0;
+}
+
+.bell-bottom {
+  position: relative;
+  z-index: 0;
+  width: 32px;
+  height: 2px;
+}
+
+.bell-bottom::before,
+.bell-bottom::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+}
+
+.bell-bottom::before {
+  left: 1px;
+  border-bottom: 4px solid #fff;
+  border-right: 0 solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.bell-bottom::after {
+  right: 1px;
+  border-bottom: 4px solid #fff;
+  border-right: 4px solid transparent;
+  border-left: 0 solid transparent;
+}
+
+.bell-rad {
+  width: 8px;
+  height: 4px;
+  margin-top: 2px;
+  border-radius: 0 0 4px 4px;
+  animation: rad 1s 2s both infinite;
+}
+
+/* 알림 카운트 (빨간 동그라미) */
+.notification-count {
+    position: absolute;
+    z-index: 1;
+    top: -4px;
+    right: -4px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    border-radius: 50%;
+    background-color: #ff4927;
+    color: #fff;
+    animation: zoom 3s 3s both infinite;
+}
+
+@keyframes bell {
+  0% { transform: rotate(0); }
+  10% { transform: rotate(30deg); }
+  20% { transform: rotate(0); }
+  80% { transform: rotate(0); }
+  90% { transform: rotate(-30deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes rad {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(6px); }
+  20% { transform: translateX(0); }
+  80% { transform: translateX(0); }
+  90% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes zoom {
+  0% { opacity: 0; transform: scale(0); }
+  10% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; }
+  51% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* 선박등록거절 모달창 */
+#rejectModal.modal {
+    width: 500px;
+}
+
+#rejectModalP {
+    text-align: center !important;
+    margin: 0px;
+}
+
+#rejectReasonList {
+    list-style: none;
+    padding: 0;
+}
+
+#rejectModalH {
+    margin-bottom: 0px !important;
+}
+
+#rejectReasonList li {
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.reapply-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.reapply-btn:hover {
+    background-color: #45a049;
+}
