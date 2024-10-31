@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doran.mapper.WeatherMapper">
+
+	<insert id="insertWeather" parameterType="com.doran.entity.Weather">
+		INSERT INTO weather (wDate, wTime, wTemp, wWindSpeed, wWaveHeight, wSeaTemp, statBattery, wRegion, sailNum, siCode) 
+		VALUES (#{WDate}, #{WTime}, #{WTemp}, #{wWindSpeed}, #{wWaveHeight}, #{wSeaTemp}, #{statBattery}, #{wRegion}, #{sailNum}, #{siCode});
+	</insert>
+	
+	<select id="weatherList" parameterType="com.doran.entity.Weather" resultType="com.doran.entity.Weather">
+		select * from weather
+		where siCode=#{siCode} and sailNum=#{sailNum}
+	</select>
+
+</mapper>

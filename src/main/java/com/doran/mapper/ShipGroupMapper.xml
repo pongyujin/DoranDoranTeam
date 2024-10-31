@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doran.mapper.ShipGroupMapper">
+
+	<select id="groupList" parameterType="String"
+		resultType="com.doran.entity.ShipGroup">
+		select * from shipGroup
+		where siCode=#{siCode}
+	</select>
+
+	<insert id="invite" parameterType="com.doran.entity.ShipGroup">
+		INSERT INTO shipGroup (memId, siCode, authNum)
+		VALUES (#{memId}, #{siCode}, #{authNum})
+	</insert>
+
+
+	<update id="update" parameterType="com.doran.entity.ShipGroup">
+		update shipGroup set
+		authNum=#{authNum}
+		where siCode=#{siCode} and memId=#{memId}
+	</update>
+
+	<select id="authCheck"
+		parameterType="com.doran.entity.ShipGroup"
+		resultType="com.doran.entity.ShipGroup">
+		select * from shipGroup
+		where siCode=#{siCode} and memId=#{memId}
+	</select>
+
+	<delete id="delete" parameterType="com.doran.entity.ShipGroup">
+		delete from shipGroup
+		where
+		siCode=#{siCode} and memId=#{memId}
+	</delete>
+	
+	<insert id="shipRegister" parameterType="com.doran.entity.Ship">
+		INSERT INTO shipGroup (memId, siCode, authNum)
+		VALUES (#{memId}, #{siCode}, 0)
+	</insert>
+	
+	<select id="findMemberInGroup" parameterType="com.doran.entity.ShipGroup" resultType="com.doran.entity.ShipGroup">
+    SELECT * FROM shipGroup
+    WHERE memId = #{memId} AND siCode = #{siCode}
+</select>
+	
+
+</mapper>

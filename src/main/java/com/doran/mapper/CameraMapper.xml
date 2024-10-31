@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doran.mapper.CameraMapper">
+
+
+	<!-- 카메라 이미지 업로드 -->
+	<insert id="cameraInsert"
+		parameterType="com.doran.entity.Camera">
+		INSERT INTO camera (siCode, obsName, obsImg, sailNum, createdAt)
+		VALUES (#{siCode}, #{obsName}, #{obsImg}, #{sailNum}, NOW())
+	</insert>
+
+	<!-- Camera 데이터 조회 -->
+	<select id="getImage" parameterType="com.doran.entity.Camera" resultType="com.doran.entity.Camera">
+    SELECT * FROM camera WHERE siCode = #{siCode} AND sailNum = #{sailNum}
+</select>
+
+
+
+</mapper>

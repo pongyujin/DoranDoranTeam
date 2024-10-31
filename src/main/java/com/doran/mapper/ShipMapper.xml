@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doran.mapper.ShipMapper">
+
+	<select id="shipList" parameterType="string"
+		resultType="com.doran.entity.Ship">
+		select * from ship
+		where memId=#{memId}
+	</select>
+
+	<insert id="application" parameterType="com.doran.entity.Ship">
+		INSERT INTO ship (siCode,
+		memId, siName, siDocs, siCert, sailStatus)
+		VALUES (#{siCode}, #{memId},
+		#{siName}, #{siDocs}, #{siCert}, #{sailStatus});
+	</insert>
+
+	<update id="approveShip" parameterType="com.doran.entity.Ship">
+		update ship set
+		siCert=#{siCert}
+		where siCode=#{siCode} and memId=#{memId}
+	</update>
+
+	<update id="sailStatus" parameterType="com.doran.entity.Ship">
+		update ship set
+		sailStatus=#{sailStatus}
+		where memId=#{memId} and siCode=#{siCode}
+	</update>
+
+	<select id="getShip" parameterType="com.doran.entity.Ship"
+		resultType="com.doran.entity.Ship">
+		select * from ship
+		where memId=#{memId} and siCode=#{siCode}
+	</select>
+
+	<!-- 정유진이 만듬 -->
+	<select id="findShipBySiCode" parameterType="String"
+		resultType="com.doran.entity.Ship">
+		SELECT * FROM ship WHERE siCode=#{siCode}
+	</select>
+
+	<!-- 정유진 관리자페이지 -->
+	<select id="getAllShips" resultType="com.doran.entity.Ship">
+		SELECT * FROM ship WHERE siCert = '0'  <!-- 전체 ships 테이블을 조회 -->
+	</select>
+
+	<!-- 정유진 관리자 거절하기 -->
+	<update id="rejectShip">
+		UPDATE ship
+		SET siCert = #{siCert},
+		siCertReason =
+		#{siCertReason}
+		WHERE siCode = #{siCode} AND memId = #{memId}
+	</update>
+
+
+	<!-- 정유진 재신청 -->
+	<update id="updateApplication" parameterType="com.doran.entity.Ship">
+		UPDATE ship
+		SET siName = #{siName},
+		siDocs = #{siDocs},
+		siCert = #{siCert},
+		sailStatus = #{sailStatus}
+		WHERE siCode = #{siCode} AND memId = #{memId}
+	</update>
+
+
+
+
+</mapper>

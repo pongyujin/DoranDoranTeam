@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doran.mapper.MemberMapper">
+
+	<!-- 비밀번호 암호화 -->
+	<insert id="memberJoin" parameterType="com.doran.entity.Member">
+		INSERT INTO member (memId, memPw, memNick, memEmail, memPhone)
+		VALUES (#{memId}, SHA2(#{memPw}, 256), #{memNick}, #{memEmail},
+		#{memPhone});
+	</insert>
+
+
+	<!-- 암호화 -->
+	<select id="memberLogin" parameterType="com.doran.entity.Member"
+		resultType="com.doran.entity.Member">
+		SELECT * FROM member
+		WHERE memId = #{memId} AND memPw = SHA2(#{memPw}, 256);
+	</select>
+
+
+	<select id="registerCheck" parameterType="String"
+		resultType="com.doran.entity.Member">
+		select * from member
+		where memID=#{memID}
+	</select>
+
+	<!-- 암호화 -->
+	<update id="memberUpdate"
+		parameterType="com.doran.entity.Member">
+		UPDATE member SET
+		memPw = SHA2(#{memPw}, 256), memNick = #{memNick}, memEmail = #{memEmail},
+		memPhone = #{memPhone}
+		WHERE memId = #{memId}
+	</update>
+
+
+	<!-- 구글 사용자가 이미 등록된 회원인지 이메일로 확인 -->
+	<select id="googleMemberCheck" parameterType="string"
+		resultType="com.doran.entity.Member">
+		SELECT * FROM member WHERE memEmail = #{memEmail}
+	</select>
+
+	<!-- 구글 사용자가 회원이 아니면 회원가입 실행 -->
+	<insert id="googleMemberJoin"
+		parameterType="com.doran.entity.Member">
+		INSERT INTO member (memId, memPw, memNick, memEmail, memPhone)
+		VALUES (#{memId}, #{memPw}, #{memNick}, #{memEmail}, #{memPhone})
+	</insert>
+
+</mapper>
