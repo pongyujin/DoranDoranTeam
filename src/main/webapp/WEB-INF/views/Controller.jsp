@@ -156,6 +156,7 @@
 	padding: 10px;
 	border-radius: 8px;
 	box-shadow: none;
+	z-index: 1000000000;
 }
 
 .status-light {
@@ -914,6 +915,7 @@
                 .then(response => {
                     this.updateStatus("정박 중", "red"); // 상태 업데이트
                     this.sailStatus = '0'; // sailStatus 업데이트
+                    window.location.href = "http://localhost:8085/controller/map2";
                 })
                 .catch(error => {
                     console.error('Error in endSail:', error);
@@ -1213,7 +1215,6 @@
 	  		                strokeColor: "#FF0000",
 	  		                strokeOpacity: 1.0,
 	  		                strokeWeight: 3,
-	  		              	editable: true,
 	  		            });
 	  		          	this.flightPath.setMap(this.sailMap);
 	  		       		
@@ -1326,7 +1327,7 @@
 	            if (this.sailStatus === '1') {
 	                setInterval(() => {
 	                    this.realTimePoly();
-	                }, 5000);
+	                }, 5000000);
 	            }
 	        }, goMain(){
 	        	window.location.href = "http://localhost:8085/controller/main"; // 특정 페이지로 이동
