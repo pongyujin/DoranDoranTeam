@@ -55,7 +55,7 @@ public class HomeController {
 		System.out.println("kakaoClientId" + kakaoClientId);
 		System.out.println("naverClientId" + naverClientId);
 
-		return "Main2";
+		return "Main";
 
 	}
 	
