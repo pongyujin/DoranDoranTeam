@@ -563,7 +563,7 @@
 
 		<!-- 남은 시간 거리 패널 -->
 		<div class="info-overlay">
-			<div class="time-distance">
+			<div class="time-distance" id="info-overlay">
 				<span id="remainingTime">9분</span> <span id="remainingDistance">4.1km</span>
 			</div>
 
@@ -1420,207 +1420,204 @@
 	            } else {
 	              btn.style.opacity = 0.5;
 	              btn.style.boxShadow = 'none';
-	              info.style.diplay = 'none';
+	              info.style.display = 'none';
 	            }
 	          }
 	        }
 	      });
 
-    </script>
-
 	<!-- 수동제어 관련 / 허재혁 -->
-	<script>
-        var speed = 0; //초기값
-        var maxSpeed = 100;
-        var minSpeed = 0;
 
-        var degree = 90;  // 서보 모터 기본 각도
-        var maxDegree = 180;
-        var minDegree = 0;
-        
-        // 속도 ↑ ↓
-        function move(direction) {
-            if (direction === 'up') {
-                speed += 10;
-                if (speed > maxSpeed) {
-                    speed = maxSpeed;
-                }
-            } else if (direction === 'down') {
-                speed -= 10;
-                if (speed < minSpeed) {
-                    speed = minSpeed;
-                }
+    var speed = 0; // 초기값
+    var maxSpeed = 100;
+    var minSpeed = 0;
+
+    var degree = 90;  // 서보 모터 기본 각도
+    var maxDegree = 180;
+    var minDegree = 0;
+    
+    // 속도 ↑ ↓
+    function move(direction) {
+        if (direction === 'up') {
+            speed += 10;
+            if (speed > maxSpeed) {
+                speed = maxSpeed;
             }
-
-            // AJAX 요청으로 서버에 속도 값 전달
-            fetch('/controller/updateSpeed', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ speed: speed })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Speed updated on server:', data);
-            })
-            .catch(error => {
-                console.error('Error updating speed:', error);
-            });
-        }
-      
-        // 방향타 ← →
-        function moveServo(direction) {
-            if (direction === 'left') {
-                degree -= 10;
-                if (degree < minDegree) {
-                    degree = minDegree;
-                }
-            } else if (direction === 'right') {
-                degree += 10;
-                if (degree > maxDegree) {
-                    degree = maxDegree;
-                }
+        } else if (direction === 'down') {
+            speed -= 10;
+            if (speed < minSpeed) {
+                speed = minSpeed;
             }
-
-            console.log('Sending degree to server:', degree);
-
-            // AJAX 요청으로 서버에 각도 값 전달
-            fetch('/controller/updateServoDegree', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ degree: degree })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Degree updated on server:', data);
-            })
-            .catch(error => {
-                console.error('Error updating degree:', error);
-            });
         }
-        
-        // 모터 스탑 속도값 0
-        function motorStop() {
-           speed = 0;
-           fetch('/controller/updateSpeed', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ speed: speed })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Speed updated on server:', data);
-            })
-            .catch(error => {
-                console.error('Error updating speed:', error);
-            });
-        }           
-         
-        // 서보 중앙고정 90도 값
-        function servoReset() {
-           degree = 90;
-           fetch('/controller/updateServoDegree', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ degree: degree })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Degree updated on server:', data);
-            })
-            .catch(error => {
-                console.error('Error updating degree:', error);
-            });
+
+        // AJAX 요청으로 서버에 속도 값 전달
+        fetch('/controller/updateSpeed', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ speed: speed })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Speed updated on server:', data);
+        })
+        .catch(error => {
+            console.error('Error updating speed:', error);
+        });
+    }
+  
+    // 방향타 ← →
+    function moveServo(direction) {
+        if (direction === 'left') {
+            degree -= 10;
+            if (degree < minDegree) {
+                degree = minDegree;
+            }
+        } else if (direction === 'right') {
+            degree += 10;
+            if (degree > maxDegree) {
+                degree = maxDegree;
+            }
         }
-        
-        // 속도 조절 js
-       $(function() {
-    var maxVal = $('#speedRange1').attr('max'); // 슬라이더의 최대값을 가져옵니다.
-    var rangePercent = $('#speedRange1').val();
 
-    // 초기 버블 위치 설정
-    var leftPosition = (rangePercent / maxVal) * 100 + '%';
-    $('#h4-subcontainer h4').css('left', leftPosition);
+        console.log('Sending degree to server:', degree);
 
-    $('#speedRange1').on('input', function() {
-        rangePercent = $('#speedRange1').val();
-        $('#h4-subcontainer h4').html(rangePercent + '<span></span>');
+        // AJAX 요청으로 서버에 각도 값 전달
+        fetch('/controller/updateServoDegree', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ degree: degree })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Degree updated on server:', data);
+        })
+        .catch(error => {
+            console.error('Error updating degree:', error);
+        });
+    }
+    
+    // 모터 스탑 속도값 0
+    function motorStop() {
+       speed = 0;
+       fetch('/controller/updateSpeed', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ speed: speed })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Speed updated on server:', data);
+        })
+        .catch(error => {
+            console.error('Error updating speed:', error);
+        });
+    }           
+    
+    // 서보 중앙고정 90도 값
+    function servoReset() {
+       degree = 90;
+       fetch('/controller/updateServoDegree', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ degree: degree })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Degree updated on server:', data);
+        })
+        .catch(error => {
+            console.error('Error updating degree:', error);
+        });
+    }
+    
+    // 속도 조절 js
+    $(function() {
+        var maxVal = $('#speedRange1').attr('max'); // 슬라이더의 최대값을 가져옵니다.
+        var rangePercent = $('#speedRange1').val();
 
-        // hue-rotate 효과 (선택사항)
-        $('#speedRange1, #h4-subcontainer h4 > span').css('filter', 'hue-rotate(-' + (rangePercent * 9) + 'deg)');
-
-        // 버블 위치 계산
+        // 초기 버블 위치 설정
         var leftPosition = (rangePercent / maxVal) * 100 + '%';
+        $('#h4-subcontainer h4').css('left', leftPosition);
 
-        $('#h4-subcontainer h4').css({
-            'transform': 'translateX(-50%) scale(' + (1 + (rangePercent / 100)) + ')',
-            'left': leftPosition
+        $('#speedRange1').on('input', function() {
+            rangePercent = $('#speedRange1').val();
+            $('#h4-subcontainer h4').html(rangePercent + '<span></span>');
+
+            // hue-rotate 효과 (선택사항)
+            $('#speedRange1, #h4-subcontainer h4 > span').css('filter', 'hue-rotate(-' + (rangePercent * 9) + 'deg)');
+
+            // 버블 위치 계산
+            var leftPosition = (rangePercent / maxVal) * 100 + '%';
+
+            $('#h4-subcontainer h4').css({
+                'transform': 'translateX(-50%) scale(' + (1 + (rangePercent / 100)) + ')',
+                'left': leftPosition
+            });
         });
     });
-});
-        
-       new Vue({
-    	    el: '#app',
-    	    data() {
-    	        return {
-    	            sailStatus: '0' // 정박 중으로 초기화
-    	        };
-    	    },
-    	    watch: {
-    	        sailStatus(newStatus) {
-    	            // sailStatus가 변할 때 모달을 열거나 닫음
-    	            if (newStatus === '1') {
-    	                this.toggleSailStart();
-    	            }
-    	        }
-    	    },
-    	    methods: {
-    	        startSail() {
-    	            axios.get("http://localhost:8085/controller/sail/startSail")
-    	                .then(response => {
-    	                    this.updateStatus("운항 중", "green"); // 상태 업데이트
-    	                    this.sailStatus = '1'; // sailStatus 업데이트
-    	                })
-    	                .catch(error => {
-    	                    console.error('Error in startSail:', error);
-    	                });
-    	        },
-    	        endSail() {
-    	            axios.get("http://localhost:8085/controller/sail/endSail")
-    	                .then(response => {
-    	                    this.updateStatus("정박 중", "red"); // 상태 업데이트
-    	                    this.sailStatus = '0'; // sailStatus 업데이트
-    	                })
-    	                .catch(error => {
-    	                    console.error('Error in endSail:', error);
-    	                });
-    	        },
-    	        updateStatus(statusText, colorClass) {
-    	            const statusLight = document.getElementById("statusLight");
-    	            const statusTextElement = document.getElementById("statusText");
+    
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                sailStatus: '0' // 정박 중으로 초기화
+            };
+        },
+        watch: {
+            sailStatus(newStatus) {
+                // sailStatus가 변할 때 모달을 열거나 닫음
+                if (newStatus === '1') {
+                    this.toggleSailStart();
+                }
+            }
+        },
+        methods: {
+            startSail() {
+                axios.get("http://localhost:8085/controller/sail/startSail")
+                    .then(response => {
+                        this.updateStatus("운항 중", "green"); // 상태 업데이트
+                        this.sailStatus = '1'; // sailStatus 업데이트
+                    })
+                    .catch(error => {
+                        console.error('Error in startSail:', error);
+                    });
+            },
+            endSail() {
+                axios.get("http://localhost:8085/controller/sail/endSail")
+                    .then(response => {
+                        this.updateStatus("정박 중", "red"); // 상태 업데이트
+                        this.sailStatus = '0'; // sailStatus 업데이트
+                    })
+                    .catch(error => {
+                        console.error('Error in endSail:', error);
+                    });
+            },
+            updateStatus(statusText, colorClass) {
+                const statusLight = document.getElementById("statusLight");
+                const statusTextElement = document.getElementById("statusText");
 
-    	            if (statusTextElement) {
-    	                statusTextElement.textContent = statusText;
-    	            }
-    	            if (statusLight) {
-    	                statusLight.className = `status-light ${colorClass}`;
-    	            }
-    	        },
-    	        toggleSailStart() {
-    	            // 모달 창을 열거나 시작할 때 실행할 로직 작성
-    	            console.log("Sail started. Displaying modal or performing other actions.");
-    	        }
-    	    }
-    	});
-
-    </script>
+                if (statusTextElement) {
+                    statusTextElement.textContent = statusText;
+                }
+                if (statusLight) {
+                    statusLight.className = `status-light ${colorClass}`;
+                }
+            },
+            toggleSailStart() {
+                // 모달 창을 열거나 시작할 때 실행할 로직 작성
+                console.log("Sail started. Displaying modal or performing other actions.");
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
