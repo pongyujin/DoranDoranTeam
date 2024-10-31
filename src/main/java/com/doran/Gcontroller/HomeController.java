@@ -22,7 +22,7 @@ public class HomeController {
 	// 기본 홈 페이지
 	@RequestMapping("/")
 	public String main() {
-		return "home";
+		return "Main";
 	}
 
 	// 통계 페이지로 이동 (권한 확인 불필요)
