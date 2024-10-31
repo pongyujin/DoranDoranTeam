@@ -25,6 +25,12 @@ public class HomeController {
 		return "Main";
 	}
 
+	// 메인 페이지 이동
+	@GetMapping("/main")
+	public String showMainPage(Model model) {
+		return "Main";
+	}
+
 	// 통계 페이지로 이동 (권한 확인 불필요)
 	@GetMapping("/statistics")
 	public String showStatisticsPage(@RequestParam String siCode, Model model) {
@@ -35,14 +41,6 @@ public class HomeController {
 	}
 
 	// 메인 페이지 이동
-	@GetMapping("/main")
-	public String showMainPage(Model model) {
-
-		return "Main";
-
-	}
-
-	// 메인 페이지 이동
 	@GetMapping("/main2")
 	public String showMainPage2(Model model) {
 
@@ -50,7 +48,7 @@ public class HomeController {
 		model.addAttribute("googleClientId", googleClientId);
 		model.addAttribute("kakaoClientId", kakaoClientId);
 		model.addAttribute("naverClientId", naverClientId);
-		
+
 		System.out.println("googleCientID" + googleClientId);
 		System.out.println("kakaoClientId" + kakaoClientId);
 		System.out.println("naverClientId" + naverClientId);
@@ -58,13 +56,11 @@ public class HomeController {
 		return "Main";
 
 	}
-	
+
 	// 메인 페이지 이동
 	@GetMapping("/main3")
 	public String showMainPage3(Model model) {
-
 		return "Main3";
-
 	}
 
 	// Manager 관리자 페이지 추가
@@ -77,5 +73,11 @@ public class HomeController {
 	@GetMapping("/motorControlTest")
 	public String motorControlTestPage() {
 		return "motorControlTest";
+	}
+
+	// Controller.jsp 이동
+	@RequestMapping("/map2")
+	public String showController() {
+		return "Controller";
 	}
 }
