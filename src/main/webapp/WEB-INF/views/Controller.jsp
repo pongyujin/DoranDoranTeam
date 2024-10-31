@@ -5,14 +5,16 @@
 <head>
 <title>Controller</title>
 <meta charset="UTF-8">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- bootstrap -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- Google Maps API - Spring에서 전달된 API 키 사용 -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -898,25 +900,37 @@
 	        }, startSail(){ // 8. startSail 메서드 실행 함수
 	        	
 	        	axios.get("http://localhost:8085/controller/sail/startSail")
-	        	.then(response => {
-	                console.log("Sail started successfully.");
-	            })
-	            .catch(error => {
-	                console.error('Error in startSail:', error.response ? error.response.data : error.message);
-	            });
+                .then(response => {
+                    this.updateStatus("운항 중", "green"); // 상태 업데이트
+                    this.sailStatus = '1'; // sailStatus 업데이트
+                })
+                .catch(error => {
+                    console.error('Error in startSail:', error);
+                });
 	        	
 	        }, endSail() { // 9. endSail 메서드 실행 함수
 	        	
 	        	axios.get("http://localhost:8085/controller/sail/endSail")
-	        	.then(response => {
-	                console.log("Sail ended successfully.", response.data);
-	                window.location.href = "http://localhost:8085/controller/map2";
-	            })
-	            .catch(error => {
-	                console.error('Error in endSail:', error.response ? error.response.data : error.message);
-	            });
+                .then(response => {
+                    this.updateStatus("정박 중", "red"); // 상태 업데이트
+                    this.sailStatus = '0'; // sailStatus 업데이트
+                })
+                .catch(error => {
+                    console.error('Error in endSail:', error);
+                });
 	        
-	        }, closeVideoModal(){ // 10. 실시간 카메라 모달 끄기 함수
+	        },
+            updateStatus(statusText, colorClass) {
+                const statusLight = document.getElementById("statusLight");
+                const statusTextElement = document.getElementById("statusText");
+
+                if (statusTextElement) {
+                    statusTextElement.textContent = statusText;
+                }
+                if (statusLight) {
+                    statusLight.className = `status-light ${colorClass}`;
+                }
+            }, closeVideoModal(){ // 10. 실시간 카메라 모달 끄기 함수
 	        	
 	        	var videoModal = document.getElementById("videoModal");
 	        	videoModal.style.display = "none";
@@ -949,6 +963,7 @@
 	        	document.getElementById('cameraVideo').src = '<%=request.getContextPath()%>/resources/img/videoError.png';
 	        },
 	        initDraggable() { // 12. 실시간 카메라 모달 드래그 함수
+	        	
 	            const modal = document.getElementById('videoModal');
 	            const wrapper = document.getElementById('map');
 	            const reset = document.getElementById('reset');
@@ -1002,7 +1017,8 @@
 	                resetModalPosition();
 	            });
 	        }, toggleSailStart() { // 1. 항해 시작 모달(sailModal) 켜기 ------------------------------------------------------------------------------------------
-	            var modal = document.getElementById("sailModal");
+
+	        	var modal = document.getElementById("sailModal");
 
 	            if (modal.style.display === "none" || modal.style.display === "") {
 	               
@@ -1231,7 +1247,6 @@
 	    		document.getElementById("sailForm").submit(); // 항해 시작 Controller 연결
 
 	        }, afterStartSail(){
-	        	
 	        	if (this.msgType === "성공") {
 		    		this.sendWaypoints();
 	            }
@@ -1277,7 +1292,7 @@
 	            }
 	        }, // 5초마다 실행될 realTimePoly 메서드
 	        realTimePoly() {
-	            
+	        	
 	        	const waypoints = JSON.stringify(this.waypoints);
 	        	axios.post('http://localhost:8085/controller/aStarConnection', waypoints, {
 	                headers: {
@@ -1564,59 +1579,6 @@
         });
     });
     
-    new Vue({
-        el: '#app',
-        data() {
-            return {
-                sailStatus: '0' // 정박 중으로 초기화
-            };
-        },
-        watch: {
-            sailStatus(newStatus) {
-                // sailStatus가 변할 때 모달을 열거나 닫음
-                if (newStatus === '1') {
-                    this.toggleSailStart();
-                }
-            }
-        },
-        methods: {
-            startSail() {
-                axios.get("http://localhost:8085/controller/sail/startSail")
-                    .then(response => {
-                        this.updateStatus("운항 중", "green"); // 상태 업데이트
-                        this.sailStatus = '1'; // sailStatus 업데이트
-                    })
-                    .catch(error => {
-                        console.error('Error in startSail:', error);
-                    });
-            },
-            endSail() {
-                axios.get("http://localhost:8085/controller/sail/endSail")
-                    .then(response => {
-                        this.updateStatus("정박 중", "red"); // 상태 업데이트
-                        this.sailStatus = '0'; // sailStatus 업데이트
-                    })
-                    .catch(error => {
-                        console.error('Error in endSail:', error);
-                    });
-            },
-            updateStatus(statusText, colorClass) {
-                const statusLight = document.getElementById("statusLight");
-                const statusTextElement = document.getElementById("statusText");
-
-                if (statusTextElement) {
-                    statusTextElement.textContent = statusText;
-                }
-                if (statusLight) {
-                    statusLight.className = `status-light ${colorClass}`;
-                }
-            },
-            toggleSailStart() {
-                // 모달 창을 열거나 시작할 때 실행할 로직 작성
-                console.log("Sail started. Displaying modal or performing other actions.");
-            }
-        }
-    });
 </script>
 
 </body>
