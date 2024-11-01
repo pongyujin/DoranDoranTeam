@@ -730,7 +730,21 @@
 	              this.initSailMap();
 	            })
 	            .catch(error => {
-	              console.error("Error fetching coordinates:", error);
+	              
+	            	axios.post("http://localhost:8085/controller/flightCoordinates", waypoints, {
+		                headers: {
+		                    'Content-Type': 'application/json' // 올바른 Content-Type 헤더 설정
+		                }
+		            })
+		            .then(response => {
+		              this.flightPlanCoordinates = response.data;  // 데이터를 Vue 데이터 속성에 할당
+		              this.initMap();
+		              this.initSailMap();
+		            })
+		            .catch(error => {
+		              console.error("Error fetching flightCoordinates:", error);
+		            });
+	              console.error("Error fetching aStarConnection:", error);
 	            });
 	    	
 	        },
@@ -899,22 +913,20 @@
 	            infoPanel.classList.remove('active'); // 패널 숨김
 	            
 	        }, startSail(){ // 8. startSail 메서드 실행 함수
-	        	
+	        	console.log("startSail");
 	        	axios.get("http://localhost:8085/controller/sail/startSail")
                 .then(response => {
                     this.updateStatus("운항 중", "green"); // 상태 업데이트
-                    this.sailStatus = '1'; // sailStatus 업데이트
                 })
                 .catch(error => {
                     console.error('Error in startSail:', error);
                 });
 	        	
 	        }, endSail() { // 9. endSail 메서드 실행 함수
-	        	
+	        	console.log("endSail");
 	        	axios.get("http://localhost:8085/controller/sail/endSail")
                 .then(response => {
                     this.updateStatus("정박 중", "red"); // 상태 업데이트
-                    this.sailStatus = '0'; // sailStatus 업데이트
                     window.location.href = "http://localhost:8085/controller/map2";
                 })
                 .catch(error => {
@@ -923,6 +935,7 @@
 	        
 	        },
             updateStatus(statusText, colorClass) {
+	        	console.log("updateStatus");
                 const statusLight = document.getElementById("statusLight");
                 const statusTextElement = document.getElementById("statusText");
 
@@ -1319,7 +1332,34 @@
 	  		       		console.log("realTimePoly 경로 자동 재탐색 완료");
 	                })
 	                .catch(error => {
-	                    console.error("목적지 설정 실패:", error);
+	                	
+	                	axios.post('http://localhost:8085/controller/flightPlanCoordinates', waypoints, {
+	    	                headers: {
+	    	                    'Content-Type': 'application/json' // 올바른 Content-Type 헤더 설정
+	    	                }
+	    	            }).then(response => {
+	    	                	this.flightPlanCoordinates = response.data;
+	    	                	
+	    	                	// 이전에 그려진 Polyline이 있으면 제거
+	    	                    if (this.flightPath) {
+	    	                        this.flightPath.setMap(null);
+	    	                    }
+	    	  	              	
+	    	  	           		// Polyline 생성 및 지도에 추가
+	    	  		            this.flightPath = new google.maps.Polyline({
+	    	  		                path: this.flightPlanCoordinates,
+	    	  		                geodesic: true,
+	    	  		                strokeColor: "#FF0000",
+	    	  		                strokeOpacity: 1.0,
+	    	  		                strokeWeight: 3,
+	    	  		            });
+	    	  		          	this.flightPath.setMap(this.sailMap);
+	    	  		       		console.log("realTimePoly 경로 자동 재탐색 완료");
+	    	                })
+	    	                .catch(error => {
+	    	                    console.error("목적지 설정 실패:", error);
+	    	                });
+	                    console.error("a* 목적지 설정 실패:", error);
 	                });
 	            
 	        }, // realTimePoly 실행 메서드
