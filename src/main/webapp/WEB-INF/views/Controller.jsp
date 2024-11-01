@@ -730,7 +730,7 @@
 	            })
 	            .catch(error => {
 	              
-	            	axios.post("http://localhost:8085/controller/flightCoordinates", waypoints, {
+	            	axios.post("http://localhost:8085/controller/flightPlanCoordinates", waypoints, {
 		                headers: {
 		                    'Content-Type': 'application/json' // 올바른 Content-Type 헤더 설정
 		                }
@@ -741,7 +741,7 @@
 		              this.initSailMap();
 		            })
 		            .catch(error => {
-		              console.error("Error fetching flightCoordinates:", error);
+		              console.error("Error fetching flightPlanCoordinates:", error);
 		            });
 	              console.error("Error fetching aStarConnection:", error);
 	            });

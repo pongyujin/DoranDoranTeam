@@ -203,7 +203,7 @@ public class GoogleMapController {
 			e.printStackTrace();
 		}
 
-        String url = "http://127.0.0.1:5000/aStarConnection";
+        String url = "http://172.31.42.12:5000/aStarConnection";
 
         // 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
