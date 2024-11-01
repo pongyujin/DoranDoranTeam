@@ -415,7 +415,7 @@
 				Camera view</h3>
 
 			<button class="video-close-btn" @click="closeVideoModal">✖</button>
-			<img id="cameraVideo" src="http://192.168.219.47:8080/video_feed"
+			<img id="cameraVideo" src="http://192.168.0.17:8080/video_feed"
 				alt="Video Feed" @error="videoError" />
 
 			<button type="button" id="reset" disabled
