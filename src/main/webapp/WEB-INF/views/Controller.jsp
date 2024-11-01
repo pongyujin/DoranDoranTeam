@@ -8,7 +8,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- bootstrap -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -591,9 +591,8 @@
 		<div class="status-btn">
 			<button class="autoSift-btn" id="autoSift-btn"
 				@click="toggleAutopilot()">auto "on"</button>
-			<img class="nowSail-btn" id="nowSail-btn"
-				src="<%=request.getContextPath()%>/resources/img/stop.png"
-				alt="STOP">
+			<button class="custom-btn btn-1">start</button>
+			<button class="custom-btn btn-2">stop</button>
 		</div>
 	</div>
 
