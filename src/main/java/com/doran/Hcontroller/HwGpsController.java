@@ -66,9 +66,27 @@ public class HwGpsController {
 
 			int cnt = gpsMapper.insertGps(gps);
 			System.out.println(gps);
-		}else {
+		} else {
 			System.out.println("gps 데이터 저장을 종료합니다.");
 		}
+	}
+
+	// 2-1. gps 정보 가져오기
+	@PostMapping("/getGps")
+	@Async
+	public @ResponseBody Gps getGps() {
+
+		double latitude = (double) latestGpsData.getOrDefault("latitude", 0.0);
+		double longitude = (double) latestGpsData.getOrDefault("longitude", 0.0);
+		double speed = (double) latestGpsData.getOrDefault("speed", 0.0);
+		double heading = (double) latestGpsData.getOrDefault("heading", 0.0);
+
+		Gps gps = new Gps();
+		gps.setGpsLat(latitude);
+		gps.setGpsLng(longitude);
+		gps.setGpsSpeed(speed);
+		gps.setGpsDir(heading);
+		return gps;
 	}
 
 	// 3. 스케줄링 메서드(insertGps 메서드가 1분에 한번씩 실행되도록 설정)
@@ -79,9 +97,9 @@ public class HwGpsController {
 			insertGps();
 		}
 	}
-	
+
 	// 4. 항해 시작 시 세션에서 nowSail 데이터 가져와 설정
-    public void gpsStartSail(HttpSession session) {
-        this.currentSail = (Sail) session.getAttribute("nowSail");
-    }
+	public void gpsStartSail(HttpSession session) {
+		this.currentSail = (Sail) session.getAttribute("nowSail");
+	}
 }

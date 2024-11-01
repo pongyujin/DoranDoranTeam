@@ -1,8 +1,5 @@
 package com.doran.Hcontroller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doran.Mcontroller.WeatherController;
+import com.doran.entity.Gps;
 import com.doran.entity.Ship;
 
 @Controller
@@ -66,7 +64,7 @@ public class InfoPanelController {
 	}
 
 	// 1. 전역 변수로 GPS 데이터를 저장할 수 있는 맵
-    private Map<String, Object> latestGpsData = new HashMap<>();
+	// private Map<String, Object> latestGpsData = new HashMap<>();
 	
 	// ------------------------------------------------------------------------//	
 
@@ -108,11 +106,9 @@ public class InfoPanelController {
 	// 6. 속도
 	public String velocity() {
 		
-		if (latestGpsData.isEmpty()) {
-            return "속도 데이터가 없습니다.";
-        }
-
-		double speed = (double) latestGpsData.get("speed"); // 속도
+		Gps nowGps = hwGpsController.getGps();
+		
+		double speed = nowGps.getGpsSpeed();
 
         return speed + " km/h";
 	}
@@ -150,15 +146,16 @@ public class InfoPanelController {
 //        return location;
 //    }
 	
+	@Autowired
+	private HwGpsController hwGpsController;
+	
 	// 9. 최신 GPS 데이터를 반환하는 메서드(현재 위도 경도)
     public String getLatestGpsLocation() {
     	
-        if (latestGpsData.isEmpty()) {
-            return "GPS 데이터가 없습니다.";
-        }
+        Gps nowGps = hwGpsController.getGps();
 
-        double latitude = (double) latestGpsData.get("latitude");
-        double longitude = (double) latestGpsData.get("longitude");
+        double latitude = nowGps.getGpsLat();
+        double longitude = nowGps.getGpsLng();
 
         return "위도: " + latitude + ", 경도: " + longitude;
     }
@@ -166,11 +163,9 @@ public class InfoPanelController {
 	// 10. 방위
 	public String direction() {
 		
-		if (latestGpsData.isEmpty()) {
-            return "GPS 데이터가 없습니다.";
-        }
+		Gps nowGps = hwGpsController.getGps();
 		
-		double heading = (double) latestGpsData.get("heading");
+		double heading = nowGps.getGpsDir();
 		String direction = "방위각 " + heading;
 		return direction;
 	}
