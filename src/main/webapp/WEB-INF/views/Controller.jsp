@@ -741,7 +741,7 @@
 		              this.initSailMap();
 		            })
 		            .catch(error => {
-		              console.error("Error fetching flightPlanCoordinates:", error);
+		              console.error("Error fetching flightCoordinates:", error);
 		            });
 	              console.error("Error fetching aStarConnection:", error);
 	            });
