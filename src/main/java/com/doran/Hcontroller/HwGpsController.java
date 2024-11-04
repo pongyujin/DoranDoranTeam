@@ -42,6 +42,7 @@ public class HwGpsController {
 
 		// GPS 데이터를 최신 상태로 저장
 		latestGpsData.putAll(data);
+
 	}
 
 	// 2. gps 정보 db 저장(항해 시작 시)
@@ -79,9 +80,9 @@ public class HwGpsController {
 			insertGps();
 		}
 	}
-	
+
 	// 4. 항해 시작 시 세션에서 nowSail 데이터 가져와 설정
-    public void gpsStartSail(HttpSession session) {
-        this.currentSail = (Sail) session.getAttribute("nowSail");
-    }
+	public void gpsStartSail(HttpSession session) {
+		this.currentSail = (Sail) session.getAttribute("nowSail");
+	}
 }
