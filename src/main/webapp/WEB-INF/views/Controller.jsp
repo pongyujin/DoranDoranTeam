@@ -1255,6 +1255,7 @@
 
 	          // 커스텀 마커 인스턴스 생성
 	          new CustomMarker(position, map, label);
+	          
 	        }, getPoly(){ // 3-1. 경로 재설정 버튼 누르면 비동기 방식으로 경로 받아오기(GoogleMapController에서 a*알고리즘과 통신)
 
 	        	const lastWaypoint = this.waypoints[this.waypoints.length - 1];
