@@ -566,7 +566,7 @@
 
 		<!-- 남은 시간 거리 패널 -->
 		<div class="info-overlay">
-			<div class="time-distance" id="info-overlay">
+			<div class="time-distance" id="info-overlay2">
 				<span id="remainingTime">9분</span> <span id="remainingDistance">4.1km</span>
 			</div>
 
@@ -741,7 +741,7 @@
 		              this.initSailMap();
 		            })
 		            .catch(error => {
-		              console.error("Error fetching flightPlanCoordinates:", error);
+		              console.error("Error fetching flightCoordinates:", error);
 		            });
 	              console.error("Error fetching aStarConnection:", error);
 	            });
@@ -1181,6 +1181,9 @@
   		  		            	this.endMarker = []; // 마커 배열 초기화
   		  		        	}
 
+  		  		     		// 커스텀 마커 추가
+  		  		        	this.addCustomMarker(this.destination[0].lat, this.destination[0].lng, address);
+  		  		          	
   	  		                const marker = new google.maps.Marker({
   	  		                	position: { lat: this.destination[0].lat, lng: this.destination[0].lng }, // 위치 설정
   	  		                    map: this.sailMap,
@@ -1198,7 +1201,61 @@
                     console.error("목적지 좌표 설정 실패:", error);
                 });
 	            
-	    	}, getPoly(){ // 3-1. 경로 재설정 버튼 누르면 비동기 방식으로 경로 받아오기(GoogleMapController에서 a*알고리즘과 통신)
+	    	},
+
+	        addCustomMarker(lat, lng, label) {
+	          const position = new google.maps.LatLng(lat, lng);
+	          const map = this.sailMap;
+
+	          // 커스텀 마커 클래스 정의
+	          class CustomMarker extends google.maps.OverlayView {
+	            constructor(position, map, label) {
+	              super();
+	              this.position = position;
+	              this.label = label;
+
+	              // HTML 요소 생성 및 스타일 적용
+	              this.div = document.createElement("div");
+	              this.div.style.position = "absolute";
+	              this.div.style.padding = "5px 10px";
+	              this.div.style.backgroundColor = "white";
+	              this.div.style.borderRadius = "8px";
+	              this.div.style.border = "1px solid #ddd";
+	              this.div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
+	              this.div.style.fontSize = "14px";
+	              this.div.style.color = "#333";
+	              this.div.style.whiteSpace = "nowrap";
+	              this.div.innerText = label;
+
+	              // 지도에 추가
+	              map.getDiv().appendChild(this.div);
+	              this.setMap(map);
+	            }
+
+	            // CustomOverlay의 위치 업데이트
+	            draw() {
+	              const projection = this.getProjection();
+	              const position = projection.fromLatLngToDivPixel(this.position);
+
+	              // HTML 요소 위치 설정
+	              if (position) {
+	                this.div.style.left = position.x + "px";
+	                this.div.style.top = position.y + "px";
+	              }
+	            }
+
+	            // CustomOverlay 삭제
+	            onRemove() {
+	              if (this.div) {
+	                this.div.parentNode.removeChild(this.div);
+	                this.div = null;
+	              }
+	            }
+	          }
+
+	          // 커스텀 마커 인스턴스 생성
+	          new CustomMarker(position, map, label);
+	        }, getPoly(){ // 3-1. 경로 재설정 버튼 누르면 비동기 방식으로 경로 받아오기(GoogleMapController에서 a*알고리즘과 통신)
 
 	        	const lastWaypoint = this.waypoints[this.waypoints.length - 1];
 	        	if (!lastWaypoint || lastWaypoint.lat !== this.destination[0].lat || lastWaypoint.lng !== this.destination[0].lng) {
@@ -1460,22 +1517,22 @@
 	            controlPanel.style.display = this.isAutopilotOn ? "none" : "flex";
 	          },
 	          checkSailStatus() {
-	            const btn = document.getElementById("nowSail-btn");
-	            const info = document.getElementById("info-overlay");
-	            
-	            if (!info) {
-	                console.warn("info overlay element not found.");
-	                return;
-	            }
-	            
+	            // const btn = document.getElementById("nowSail-btn");
+	            const info = document.getElementById("info-overlay2");
+
 	            console.log(this.sailStatus);
 	            if (this.sailStatus === '1') {
-	              btn.style.opacity = 1;
-	              btn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.5)';
+	              //btn.style.opacity = 1;
+	              //btn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.5)';
 	            } else {
-	              btn.style.opacity = 0.5;
-	              btn.style.boxShadow = 'none';
-	              info.style.display = 'none';
+	              //btn.style.opacity = 0.5;
+	              //btn.style.boxShadow = 'none';
+	              if (!info) {
+	            	  console.warn("info overlay element not found.");
+		              return;
+		          }else{
+		        	  info.style.display = 'none';
+		          }
 	            }
 	          }
 	        }
