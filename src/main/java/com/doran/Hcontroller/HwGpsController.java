@@ -1,6 +1,7 @@
 package com.doran.Hcontroller;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
@@ -74,7 +75,7 @@ public class HwGpsController {
 	// 2-1. gps 정보 가져오기
 	@PostMapping("/getGps")
 	@Async
-	public @ResponseBody Gps getGps() {
+	public CompletableFuture<Gps> getGps() {
 
 		double latitude = (double) latestGpsData.getOrDefault("latitude", 0.0);
 		double longitude = (double) latestGpsData.getOrDefault("longitude", 0.0);
@@ -86,7 +87,7 @@ public class HwGpsController {
 		gps.setGpsLng(longitude);
 		gps.setGpsSpeed(speed);
 		gps.setGpsDir(heading);
-		return gps;
+		return CompletableFuture.completedFuture(gps);
 	}
 
 	// 3. 스케줄링 메서드(insertGps 메서드가 1분에 한번씩 실행되도록 설정)

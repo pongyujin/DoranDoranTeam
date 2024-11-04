@@ -1,5 +1,7 @@
 package com.doran.Hcontroller;
 
+import java.util.concurrent.CompletableFuture;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,10 +105,14 @@ public class InfoPanelController {
 		return signalStatus;
 	}
 
+	@Autowired
+	private HwGpsController hwGpsController;
+	
 	// 6. 속도
 	public String velocity() {
 		
-		Gps nowGps = hwGpsController.getGps();
+		CompletableFuture<Gps> futureGps = hwGpsController.getGps();
+	    Gps nowGps = futureGps.join(); // 결과를 기다림
 		
 		double speed = nowGps.getGpsSpeed();
 
@@ -146,13 +152,11 @@ public class InfoPanelController {
 //        return location;
 //    }
 	
-	@Autowired
-	private HwGpsController hwGpsController;
-	
 	// 9. 최신 GPS 데이터를 반환하는 메서드(현재 위도 경도)
     public String getLatestGpsLocation() {
     	
-        Gps nowGps = hwGpsController.getGps();
+    	CompletableFuture<Gps> futureGps = hwGpsController.getGps();
+        Gps nowGps = futureGps.join(); // 결과를 기다림
 
         double latitude = nowGps.getGpsLat();
         double longitude = nowGps.getGpsLng();
@@ -163,7 +167,8 @@ public class InfoPanelController {
 	// 10. 방위
 	public String direction() {
 		
-		Gps nowGps = hwGpsController.getGps();
+		CompletableFuture<Gps> futureGps = hwGpsController.getGps();
+	    Gps nowGps = futureGps.join(); // 결과를 기다림
 		
 		double heading = nowGps.getGpsDir();
 		String direction = "방위각 " + heading;
