@@ -23,16 +23,16 @@
 <br>
 
 ## ⚙ 시스템 아키텍처(구조)
-![image](/시스템아키텍쳐.png)
+![image](/system-architecture.png)
 <br>
 
 ## 📌 SW유스케이스
-![image](/서비스흐름도.png)
+![image](/service-flow.png)
 <br>
 
 
 ## 📌 ER다이어그램
-![image](/ER다이어그램.png)
+![image](/er-diagram.png)
 
 <br>
 
