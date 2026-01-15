@@ -1,4 +1,4 @@
-ㅋ# 📎 무인 선박 원격 제어 웹 플랫폼 (팀명: 도란도란팀)
+# 📎 무인 선박 원격 제어 웹 플랫폼 (팀명: 도란도란팀)
 
 ## 👀 서비스 소개
 * 서비스명: 무인 선박 원격 제어 웹 플랫폼
@@ -44,17 +44,18 @@
 
 ### 시현영상
 ![image](/vidio.mp4)
+다운로드하셔서 시청하셔야합니다!
 <br>
 
-### 선박모형
+### 선박모형 제어부/센서부/추진부
 ![image](/boatpage.png)
 <br>
 
-### 선박 카메라,라이다
+### 선박 카메라/라이다 장애물 인식
 ![image](/boat2.png)
 <br>
 
-### 관제화면
+### 관제화면 선박정보확인/실시간영상/실시간데이터
 ![image](/page4.gif)
 <br>
 
@@ -62,12 +63,8 @@
 ![image](/page_1.gif)
 <br>
 
-### 관제화면
+### 관제화면 자동수동모드/flask서버배포
 ![image](/page_2.gif)
-<br>
-
-### 선박 카메라,라이다
-![image](/boat2.png)
 <br>
 
 ### 회원가입/비밀번호 해시 저장
@@ -104,26 +101,28 @@
     <td align="center"><b>Backend,Modeling</b></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/Kim-So-Ri" target='_blank'>Kim-So-Ri</a></td>
+    <td align="center"><a href="https://github.com/pongyujin" target='_blank'>pongyujin</a></td>
     <td align="center"><a href="https://github.com/자신의username작성해주세요" target='_blank'>github</a></td>
     <td align="center"><a href="https://github.com/자신의username작성해주세요" target='_blank'>github</a></td>
     <td align="center"><a href="https://github.com/wlgo1234" target='_blank'>wlgo1234</a></td>
-    <td align="center"><a href="https://github.com/pongyujin" target='_blank'>pongyujin</a></td>
+    <td align="center"><a href="https://github.com/olilvado" target='_blank'>olilvado</a></td>
   </tr>
 </table>
 
 ## 🤾‍♂️ 트러블슈팅
   
-* AI API 실행 했을 때 10번 중 1번은 서버 오류로 값이 전달 되지 않았다.<br>
+* 라즈베리파이의 성능 제약으로 YOLO모델 실행불가.<br>
 
-![image](https://github.com/user-attachments/assets/7e10b3f5-26e4-4831-849f-7003195a815a)
--> for문과 if문을 걸어서 값이 없을 경우 2초 쉬고 다시 실행하는 로직 생성
+
+-> Flask서버를 구축하여 HTTP기반 실시간 영상 스트리밍
 
 <br>
 <br>
 
-*  톰캣 서버가 패키지들의 경로들을 찾지 못해서 서버가 열리지 않았다<br>
-->프로젝트 삭제 후 깃허브에 있는 파일 다시 가져옴 Maven Update Clean 작업 후 가능해졌다!!!
+* 이미지 파일 저장의 정확도,빈번한이미지 저장,중복저장,덮어쓰기 문제<br>
 
+-> 정확도 기반 필터링(70%이상), 시간간격제한(5초간격), 중복방지, 고유한파일이름(현재날짜,시간명)
 
+* A* 알고리즘 경유점 설정의 경유점을 추가하면서 다음 경유점으로 가지 못하는 문제.<br>
 
+-> 경유점과의 거리간격을 500m로 확대
