@@ -42,8 +42,24 @@
 <img src="./mainpage.gif" width="700"/>
 <br>
 
-### 그룹권한 설정
-![image](/page1.png)
+### 선박모형
+![image](/boatpage.png)
+<br>
+
+### 선박 카메라,라이다
+![image](/boat2.png)
+<br>
+
+### 관제화면
+![image](/page5.mp4)
+<br>
+
+### 
+![image](/boat2.png)
+<br>
+
+### 선박 카메라,라이다
+![image](/boat2.png)
 <br>
 
 ### 회원가입/비밀번호 해시 저장
@@ -64,18 +80,18 @@
     <td align="center"><img src="https://pbs.twimg.com/media/B-n6uPYUUAAZSUx.png" width="100" height="100"/></td>
   </tr>
   <tr>
-    <td align="center"><strong>김소리</strong></td>
-    <td align="center"><strong>고우석</strong></td>
-    <td align="center"><strong>강수민</strong></td>
-    <td align="center"><strong>문지해</strong></td>
     <td align="center"><strong>정유진</strong></td>
+    <td align="center"><strong>고우석</strong></td>
+    <td align="center"><strong>허재혁</strong></td>
+    <td align="center"><strong>문지해</strong></td>
+    <td align="center"><strong>박소희</strong></td>
   </tr>
   <tr>
-    <td align="center"><b>Backend</b></td>
-    <td align="center"><b>Backend</b></td>
+    <td align="center"><b>PM,Backend,Fronted</b></td>
+    <td align="center"><b>Embedded Engineer,Modeling</b></td>
+    <td align="center"><b>Backend,Embedded Engineer</b></td>
     <td align="center"><b>Frontend</b></td>
-    <td align="center"><b>Frontend</b></td>
-    <td align="center"><b>Backend</b></td>
+    <td align="center"><b>Backend,Modeling</b></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Kim-So-Ri" target='_blank'>Kim-So-Ri</a></td>
