@@ -39,7 +39,7 @@
 ## 🖥 화면 구성
 
 ### 메인화면
-![image](./mainpage.gif)
+<img src="./mainpage.gif" width="700"/>
 <br>
 
 ### 그룹권한 설정
