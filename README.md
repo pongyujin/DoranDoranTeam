@@ -55,7 +55,7 @@
 <br>
 
 ### 관제화면
-![image](/page5.mp4)
+![image](/page4.gif)
 <br>
 
 ### 관제화면 항해시작
