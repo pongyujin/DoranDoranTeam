@@ -1,6 +1,4 @@
 # 📎 무인 선박 원격 제어 웹 플랫폼 (팀명: 도란도란팀)
-![그림1](https://github.com/user-attachments/assets/4fa3d946-96d7-4d3b-a33b-88d8df267b2c)
-
 
 ## 👀 서비스 소개
 * 서비스명: 무인 선박 원격 제어 웹 플랫폼
@@ -25,19 +23,16 @@
 <br>
 
 ## ⚙ 시스템 아키텍처(구조)
-![image](/시스템아키텍쳐.pdf)
+![image](/시스템아키텍쳐.png)
 <br>
 
 ## 📌 SW유스케이스
-![image](https://github.com/user-attachments/assets/325f7bfa-1086-47a9-83dd-73c50a179a33)
+![image](/서비스흐름도.png)
 <br>
 
-## 📌 서비스 흐름도
-![image](https://github.com/user-attachments/assets/dc4d3a83-4144-483d-a7db-e40d0089e604)
-<br>
 
 ## 📌 ER다이어그램
-![image](https://github.com/user-attachments/assets/f513afb2-9edc-4ac2-b8a9-837f5836bde6)
+![image](/ER다이어그램.png)
 
 <br>
 
