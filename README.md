@@ -39,29 +39,19 @@
 ## 🖥 화면 구성
 
 ### 메인화면
-![image](https://github.com/user-attachments/assets/b22e521d-2e32-4e3d-95ae-4c5d4c74b3b0)
+![image](/mainpage.gif)
 <br>
 
-
-### 로그인/회원가입/회원관리
-![image](https://github.com/user-attachments/assets/44f9133e-74a7-4a05-9976-89921da19579)
-
+### 그룹권한 설정
+![image](/page1.png)
 <br>
 
-### 설문조사/추천결과
-![image](https://github.com/user-attachments/assets/aa3db49c-de61-4167-910b-954d376699dc)
-
-
+### 회원가입/비밀번호 해시 저장
+![image](/page2.png)
 <br>
 
-### 검색기능
-![image](https://github.com/user-attachments/assets/5a7c8508-5e62-4b15-96bc-b3f223c02602)
-
-<br>
-
-### 게시판
-![image](https://github.com/user-attachments/assets/c4c2b940-5c4e-4ca2-b5a2-73f03a19fd86)
-
+### 선박DB를 통한 통계페이지
+![image](/page3.png)
 <br>
 
 ## 👨‍👩‍👦‍👦 팀원 역할
